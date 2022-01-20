@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd" bootstrap="vendor/autoload.php" colors="true">
+    <testsuites>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./tests</directory>
+        </testsuite>
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./app</directory>
+        </include>
+    </coverage>
+    <php>
+        <env name="APP_ENV" value="testing" />
+        <env name="JUNO_ENV" value="sandbox" />
+        <env name="JUNO_CLIENT_ID" value="" />
+        <env name="JUNO_CLIENT_SECRET" value="" />
+        <env name="JUNO_PRIVATE_TOKEN" value="" />
+        <env name="JUNO_PUBLIC_TOKEN" value="" />
+        <env name="JUNO_API_VERSION" value="" />
+    </php>
+</phpunit>
