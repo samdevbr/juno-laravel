@@ -2,6 +2,8 @@
 
 namespace Juno\Services;
 
+use Exception;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Http;
 
 class AuthService
@@ -27,6 +29,10 @@ class AuthService
         $response = $request
             ->asForm()
             ->post('/oauth/token', ['grant_type' => 'client_credentials']);
+
+        if ($response->status() !== Response::HTTP_OK) {
+            throw new Exception($response->status());
+        }
 
         $token = $response->json('access_token');
         $expiresIn = $response->json('expires_in');

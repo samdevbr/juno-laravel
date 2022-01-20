@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -15,4 +15,12 @@ jobs:
         run: |
           composer install
       - name: Execute tests
+        env:
+          JUNO_ENV: ${{ secrets.JUNO_ENV }}
+          JUNO_CLIENT_ID: ${{ secrets.JUNO_CLIENT_ID }}
+          JUNO_CLIENT_SECRET: ${{ secrets.JUNO_CLIENT_SECRET }}
+          JUNO_PRIVATE_TOKEN: ${{ secrets.JUNO_PRIVATE_TOKEN }}
+          JUNO_PUBLIC_TOKEN: ${{ secrets.JUNO_PUBLIC_TOKEN }}
+          JUNO_API_VERSION: ${{ secrets.JUNO_API_VERSION }}
+          SESSION_DRIVER: array
         run: ./vendor/bin/phpunit
