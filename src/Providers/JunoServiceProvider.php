@@ -20,6 +20,8 @@ class JunoServiceProvider extends ServiceProvider
             __DIR__ . '/../config/juno.php' => config_path('juno.php')
         ], 'juno-config');
 
+        $this->mergeConfigFrom(__DIR__ . '/../config/juno.php', 'juno');
+
         $clientId = Config::get('juno.api.client_id');
         $clientSecret = Config::get('juno.api.client_secret');
         $privateToken = Config::get('juno.api.private_token');
@@ -34,7 +36,11 @@ class JunoServiceProvider extends ServiceProvider
 
         Http::macro(
             'junoAuth',
-            fn () => Http::withBasicAuth($clientId, $clientSecret)->baseUrl($authBaseUrl)
+            fn () => Http::withBasicAuth($clientId, $clientSecret)
+                ->withHeaders([
+                    'X-Api-Version' => Config::get('juno.api.version')
+                ])
+                ->baseUrl($authBaseUrl)
         );
 
         Http::macro(
