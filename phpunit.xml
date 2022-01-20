@@ -12,11 +12,5 @@
     </coverage>
     <php>
         <env name="APP_ENV" value="testing" />
-        <env name="JUNO_ENV" value="sandbox" />
-        <env name="JUNO_CLIENT_ID" value="" />
-        <env name="JUNO_CLIENT_SECRET" value="" />
-        <env name="JUNO_PRIVATE_TOKEN" value="" />
-        <env name="JUNO_PUBLIC_TOKEN" value="" />
-        <env name="JUNO_API_VERSION" value="" />
     </php>
 </phpunit>
