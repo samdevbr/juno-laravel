@@ -2,6 +2,7 @@
 
 return [
     'api' => [
+        'environment' => env('JUNO_ENV', 'sandbox'),
         'client_id' => env('JUNO_CLIENT_ID', null),
         'client_secret' => env('JUNO_CLIENT_SECRET', null),
         'private_token' => env('JUNO_PRIVATE_TOKEN', null),
