@@ -1,5 +1,5 @@
 {
-    "name": "samueldevbr/juno-php-sdk",
+    "name": "samdevbr/juno-php-sdk",
     "description": "PHP SDK para interagir com a API v2 da Juno",
     "type": "library",
     "license": "MIT",
@@ -18,6 +18,10 @@
         "illuminate/session": "^8.0.0",
         "laravel/helpers": "^1.5"
     },
+    "require-dev": {
+        "orchestra/testbench": "^6.24",
+        "nunomaduro/collision": "^5.10"
+    },
     "autoload": {
         "psr-4": {
             "Juno\\": "src/"
@@ -25,8 +29,13 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Juno\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ]
     },
     "extra": {
         "laravel": {
