@@ -3,21 +3,20 @@
 namespace Juno\Services;
 
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Session;
 
 class AuthService
 {
     public function isAuthorized()
     {
-        $session = Session::get('juno--token');
-        $expirationTs = (int)Session::get('juno--token.expires_at');
+        $session = session()->get('juno--token');
+        $expirationTs = (int)session()->get('juno--token-expires_at');
 
         return !is_null($session) && time() < $expirationTs;
     }
 
     public function getToken()
     {
-        return Session::get('juno--token');
+        return session()->get('juno--token');
     }
 
     public function authorize()
@@ -34,8 +33,8 @@ class AuthService
 
         $expirationTs = time() + $expiresIn;
 
-        Session::set('juno--token', $token);
-        Session::set('juno--token.expires_at', $expirationTs);
+        session()->put('juno--token', $token);
+        session()->put('juno--token-expires_at', $expirationTs);
 
         return true;
     }
