@@ -1,0 +1,23 @@
+{
+    "name": "samueldevbr/juno-php-sdk",
+    "description": "PHP SDK para interagir com a API v2 da Juno",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samuel Oliveira",
+            "email": "samueldevbr@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Juno\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    }
+}
