@@ -1,2 +1,1 @@
-# juno-php-sdk
-PHP SDK para interagir com a API v2 da Juno
+![Unit/Feature Tests](https://github.com/samdevbr/juno-php-sdk/actions/workflows/main.yml/badge.svg)
