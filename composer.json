@@ -40,7 +40,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Juno\\Providers\\JunoServiceProvider"
+                "Juno\\Providers\\JunoServiceProvider",
+                "Juno\\Providers\\JunoEventServiceProvider"
             ]
         }
     }
