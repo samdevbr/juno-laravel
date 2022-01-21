@@ -22,10 +22,6 @@ class JunoServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(__DIR__ . '/../config/juno.php', 'juno');
 
-        $clientId = Config::get('juno.client_id');
-        $clientSecret = Config::get('juno.client_secret');
-        $privateToken = Config::get('juno.private_token');
-
         $authBaseUrl = Config::get('juno.environment') === 'sandbox' ?
             'https://sandbox.boletobancario.com/authorization-server' :
             'https://api.juno.com.br/authorization-server';
@@ -36,7 +32,7 @@ class JunoServiceProvider extends ServiceProvider
 
         Http::macro(
             'junoAuth',
-            fn () => Http::withBasicAuth($clientId, $clientSecret)
+            fn () => Http::withBasicAuth(Config::get('juno.client_id'), Config::get('juno.client_secret'))
                 ->withHeaders([
                     'X-Api-Version' => Config::get('juno.version')
                 ])
@@ -45,13 +41,13 @@ class JunoServiceProvider extends ServiceProvider
 
         Http::macro(
             'juno',
-            fn () => function () use ($privateToken, $resourceBaseUrl) {
+            fn () => function () use ($resourceBaseUrl) {
                 if (!Auth::isAuthorized()) {
                     Auth::authorize();
                 }
 
                 Http::withToken(Auth::getToken())->withHeaders([
-                    'X-Resource-Token' => $privateToken,
+                    'X-Resource-Token' => Config::get('juno.private_token'),
                     'X-Api-Version' => Config::get('juno.version')
                 ])->baseUrl($resourceBaseUrl);
             }
