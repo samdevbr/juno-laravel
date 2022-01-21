@@ -28,8 +28,6 @@ class AuthService
             ->asForm()
             ->post('/oauth/token', ['grant_type' => 'client_credentials']);
 
-        $response->throwIf($response->failed());
-
         Cache::tags('juno')
             ->put(
                 'token',
