@@ -4,21 +4,19 @@ namespace Juno\Services;
 
 use Exception;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class AuthService
 {
     public function isAuthorized()
     {
-        $session = session()->get('juno--token');
-        $expirationTs = (int)session()->get('juno--token-expires_at');
-
-        return !is_null($session) && time() < $expirationTs;
+        return Cache::tags('juno')->has('token');
     }
 
     public function getToken()
     {
-        return session()->get('juno--token');
+        return Cache::tags('juno')->get('token');
     }
 
     public function authorize()
@@ -30,17 +28,14 @@ class AuthService
             ->asForm()
             ->post('/oauth/token', ['grant_type' => 'client_credentials']);
 
-        if ($response->status() !== Response::HTTP_OK) {
-            throw new Exception($response->status());
-        }
+        $response->throwIf($response->failed());
 
-        $token = $response->json('access_token');
-        $expiresIn = $response->json('expires_in');
-
-        $expirationTs = time() + $expiresIn;
-
-        session()->put('juno--token', $token);
-        session()->put('juno--token-expires_at', $expirationTs);
+        Cache::tags('juno')
+            ->put(
+                'token',
+                $response['access_token'],
+                now()->addSeconds($response['expires_in'])
+            );
 
         return true;
     }

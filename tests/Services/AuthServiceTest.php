@@ -20,8 +20,7 @@ class AuthServiceTest extends TestCase
     public function itCanAuthorizeClient()
     {
         $this->assertTrue(Auth::authorize());
-        $this->assertTrue(session()->has('juno--token'));
-        $this->assertTrue(session()->has('juno--token-expires_at'));
-        $this->assertStringStartsWith('ey', session()->get('juno--token'));
+        $this->assertNotNull(Auth::getToken());
+        $this->assertStringStartsWith('ey', Auth::getToken());
     }
 }
